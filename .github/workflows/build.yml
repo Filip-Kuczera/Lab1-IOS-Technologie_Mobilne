@@ -1,0 +1,35 @@
+name: Build iOS projects
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [HelloiOS, CompareStrings, Bullseye]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode version
+        run: xcodebuild -version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        working-directory: ${{ matrix.project }}
+        run: xcodegen
+
+      - name: Build for iOS Simulator
+        working-directory: ${{ matrix.project }}
+        run: |
+          xcodebuild build \
+            -project ${{ matrix.project }}.xcodeproj \
+            -scheme ${{ matrix.project }} \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO
