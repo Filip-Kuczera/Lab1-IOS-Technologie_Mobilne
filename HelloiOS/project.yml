@@ -1,0 +1,26 @@
+name: HelloiOS
+options:
+  bundleIdPrefix: pl.example
+  deploymentTarget:
+    iOS: "17.0"
+targets:
+  HelloiOS:
+    type: application
+    platform: iOS
+    sources:
+      - HelloiOS
+    info:
+      path: Info.plist
+      properties:
+        UILaunchScreen: {}
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default Configuration
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: pl.example.HelloiOS
+        SWIFT_VERSION: "5.0"
+        TARGETED_DEVICE_FAMILY: "1"
